@@ -7,7 +7,7 @@
 ## 
 Operation:
 1. Import the above 4 projects into IntelliJ IDEA
-2. Install test datalog and test dd common using the `mvn`
+2. Install test-datalog and test-dd-common using the `mvn`
 3. Run the dd-agent container
 ```shell
 docker run -d --name dd-agent \
