@@ -4,7 +4,7 @@ WORKDIR /app
 COPY target/test-dd-consumer-1.0-SNAPSHOT.jar app.jar
 COPY dd-java-agent.jar dd-java-agent.jar
 
-LABEL com.datadoghq.tags.service="notes"
+LABEL com.datadoghq.tags.service="dd-consumer"
 LABEL com.datadoghq.tags.env="dev"
 LABEL com.datadoghq.tags.version="0.0.1"
 
