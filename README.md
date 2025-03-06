@@ -11,7 +11,7 @@ Operation:
 3. Run the dd-agent container
 ```shell
 docker run -d --name dd-agent \
--e DD_API_KEY=aa85ec1cc8805b17b837e644df703510 \
+-e DD_API_KEY=xxxxxxxxxxxxxxxxxxx \
 -e DD_SITE="us5.datadoghq.com" \
 -v /var/run/docker.sock:/ var/run/docker.sock:ro \
 -v /proc/:/ host/proc/:ro \
