@@ -6,9 +6,17 @@
 4. test-dd-consumer: consume messages and communicate with the database
 ## 
 Operation:
-1. Import the above 4 projects into IntelliJ IDEA
-2. Install test-datalog and test-dd-common using the `mvn`
-3. Run the dd-agent container
+1. Optional: Import the above 4 projects into IntelliJ IDEA
+2. Upload all projects to Cloud OS (AWS, Azure or Aliyun .. etc)
+3. Install test-datalog and test-dd-common using the `mvn`
+```shell
+cd test-datalog
+mvn install
+
+cd test-dd-common
+mvn install
+```
+4. Run the dd-agent container
 ```shell
 docker run -d --name dd-agent \
 -e DD_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxx \
@@ -19,22 +27,39 @@ docker run -d --name dd-agent \
 -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
 datadog/agent:latest
 ```
-4. Create Docker image
+5. Build test-dd-consumer and test-dd-producer
+```shell
+cd test-dd-consumer
+mvn package
+
+cd test-dd-producer
+mvn package
+```
+6. Create Docker image
 ```shell
 cd test-dd-consumer
 docker build -t test-dd-consumer .
+
 cd test-dd-producer
 docker build -t test-dd-producer .
 ```
-4. Run the test container
+7. Run the test container
 ```shell
 docker run -d -p 9092:9092 --link dd-agent --name dd-consumer  test-dd-consumer
 docker run -d -p 9091:9091 --link dd-agent --name dd-producer  test-dd-producer
 ```
 
-do testing
+Do testing
 ```shell
+# add userinfo
 curl -X POST http://localhost:9091/producer/sendToTestConsume -H "Content-Type:application/json" -d '{"id": 6, "name": "name006",     "age": 600 }'
-curl -X POST http://localhost:9091/producer/sendToTestFunction -H "Content-Type:application/json" -d '{     "id": 5,     "name": "name005",     "age": 500 }'
+
+# add userinfo and return DDResponseOne as Message 
+curl -X POST http://localhost:9091/producer/sendToTestFunction -H "Content-Type:application/json" -d '{     "id": 5,     "name": "name005",     "age": 500, "flag": 1 }'
+
+# add userinfo and return DDResponseTwo as Message
+curl -X POST http://localhost:9091/producer/sendToTestFunction -H "Content-Type:application/json" -d '{     "id": 5,     "name": "name005",     "age": 500, "flag": 0 }'
+
+# query all of userinfo from DB
 curl localhost:9092/consumer/getAll
 ```
