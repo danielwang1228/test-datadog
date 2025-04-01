@@ -14,12 +14,18 @@ import java.util.function.Consumer;
 public class TestProducer {
     @Bean
     public Consumer<Message<String>> receiveResponse() {
-        try {
-            TimeUnit.MILLISECONDS.sleep(GlobalConfig.receiveResponseDelay);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         return message -> {
+            try {
+                long begin = System.currentTimeMillis() / 1000;
+                System.out.println("Begin wait receiveResponse - " + GlobalConfig.receiveResponseDelay + " : " + begin);
+                TimeUnit.MILLISECONDS.sleep(GlobalConfig.receiveResponseDelay);
+                long end = System.currentTimeMillis() / 1000;
+                System.out.println("End wait receiveResponse : " + end + " - "  + (end - begin));
+
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             String response = message.getPayload();
             System.out.println("receiveResponse - Receive a response:" + response);
         };

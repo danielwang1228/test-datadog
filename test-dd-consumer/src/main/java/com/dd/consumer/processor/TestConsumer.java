@@ -29,12 +29,17 @@ public class TestConsumer {
 
     @Bean
     public Consumer<Message<DDRequest>> testConsume() {
-        try {
-            TimeUnit.MILLISECONDS.sleep(GlobalConfig.testConsumeDelay);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         return message -> {
+            try {
+                long begin = System.currentTimeMillis() / 1000;
+                System.out.println("Begin wait testConsume - " + GlobalConfig.testConsumeDelay + " : " + begin);
+                TimeUnit.MILLISECONDS.sleep(GlobalConfig.testConsumeDelay);
+                long end = System.currentTimeMillis() / 1000;
+                System.out.println("End wait testConsume : " + end + " - " + (end - begin));
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             DDRequest request = message.getPayload();
             UserInfo userInfo = new UserInfo();
             BeanUtils.copyProperties(request, userInfo);
@@ -45,12 +50,16 @@ public class TestConsumer {
 
     @Bean
     public Function<Message<DDRequest>, Message<?>> testFunction() {
-        try {
-            TimeUnit.MILLISECONDS.sleep(GlobalConfig.testFunctionDelay);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         return message -> {
+            try {
+                long begin = System.currentTimeMillis() / 1000;
+                System.out.println("Begin wait testFunction - " + GlobalConfig.testFunctionDelay + " : " + begin);
+                TimeUnit.MILLISECONDS.sleep(GlobalConfig.testFunctionDelay);
+                long end = System.currentTimeMillis() / 1000;
+                System.out.println("End wait testFunction : " + end + " - " + (end - begin));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             DDRequest request = message.getPayload();
             System.out.println("testFunction - Receive a request:" + request);
 
