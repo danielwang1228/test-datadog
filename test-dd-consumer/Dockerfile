@@ -16,6 +16,8 @@ ENV DD_RUNTIME_METRICS_ENABLED=true
 ENV DD_PROFILING_ENABLED=true
 ENV DD_APM_ENABLED=true
 ENV DD_APM_NON_LOCAL_TRAFFIC=true
+ENV DD_TRACE_MESSAGING_ENABLED=true
+ENV DD_TRACE_OTEL_ENABLED=true
 
 ENTRYPOINT ["java" , "-javaagent:./dd-java-agent.jar", "-Ddd.trace.sample.rate=1", "-jar" , "./app.jar"]
 # ENTRYPOINT ["java", "-jar", "/app.jar"]
