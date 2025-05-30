@@ -18,7 +18,7 @@ ENV DD_APM_ENABLED=true
 ENV DD_APM_NON_LOCAL_TRAFFIC=true
 ENV DD_TRACE_MESSAGING_ENABLED=true
 ENV DD_TRACE_OTEL_ENABLED=true
-ENV DD_TRACE_METHODS=com.dd.web.service.TigerService[tigerEat];com.dd.web.service.LionService[lionRun]
+ENV DD_TRACE_METHODS=com.dd.web.service.TigerService[tigerEat];com.dd.web.service.LionService[lionRun];com.dd.web.service.OtherService[otherEat,otherRun]
 
 ENTRYPOINT ["java" , "-javaagent:./dd-java-agent.jar", "-Ddd.trace.sample.rate=1", "-jar" , "./app.jar"]
 # ENTRYPOINT ["java", "-jar", "/app.jar"]
