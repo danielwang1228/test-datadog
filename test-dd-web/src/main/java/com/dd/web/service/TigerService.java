@@ -8,7 +8,7 @@ public class TigerService {
     private OtherService otherService = new OtherService();
 
     public String tigerEat(DDRequest request) {
-        otherService.otherRun();
+        otherService.otherEat();
         return this.getClass().getName() + " eat";
     }
 
